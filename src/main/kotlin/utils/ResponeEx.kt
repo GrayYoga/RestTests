@@ -12,11 +12,11 @@ fun Response.checkStatusCode(vararg codes: Int): Response {
 
 fun Response.checkSuccess() = checkStatusCode(200, 201, 204)
 
-private fun <T> Response.entity(type: Class<T>): T {
+fun <T> Response.entity(type: Class<T>): T {
     return JacksonMapper.readValue(this.text, type)
 }
 
-private fun <T> Response.listOfEntity(type: Class<T>): List<T> {
+fun <T> Response.listOfEntity(type: Class<T>): List<T> {
     return JacksonMapper.readValue(
         this.text, JacksonMapper.typeFactory.constructCollectionType(
             List::class.java,

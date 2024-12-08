@@ -23,14 +23,23 @@ object ApiClient {
         ).apply { getLogger(ApiClient::class.java.name).log(INFO, "${this.statusCode} ${this.text}") }
     }
 
-    fun delete(route: String,
-               params: Map<String, String> = mapOf(),
-               auth: Authorization = BasicAuthorization("admin", "admin")
+    fun delete(
+        route: String,
+        params: Map<String, String> = mapOf(),
+        auth: Authorization = BasicAuthorization("admin", "admin")
     ): Response {
         return khttp.delete(
             route,
             params = params,
             auth = auth
+        ).apply { getLogger(ApiClient::class.java.name).log(INFO, "${this.statusCode} ${this.text}") }
+    }
+
+    fun put(route: String, body: Any): Response {
+        return khttp.put(
+            route,
+            headers = mapOf("Content-Type" to "application/json"),
+            data = JacksonMapper.writeValueAsString(body),
         ).apply { getLogger(ApiClient::class.java.name).log(INFO, "${this.statusCode} ${this.text}") }
     }
 }
