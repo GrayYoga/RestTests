@@ -3,11 +3,14 @@ package utils
 import khttp.responses.Response
 import org.assertj.core.api.Assertions.assertThat
 
-fun Response.checkSuccess(): Response {
+
+fun Response.checkStatusCode(vararg codes: Int): Response {
     assertThat(this.statusCode)
-        .isIn(200, 201)
+        .isIn(codes.toList())
     return this
 }
+
+fun Response.checkSuccess() = checkStatusCode(200, 201, 204)
 
 private fun <T> Response.entity(type: Class<T>): T {
     return JacksonMapper.readValue(this.text, type)
