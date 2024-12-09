@@ -14,8 +14,8 @@ class TodoManager {
             getTodos()
                 .checkSuccess()
                 .listOfEntity(Todo::class.java)
-                .last()
-                .id!!
+                .lastOrNull()
+                ?.id ?: 1u
         )
     }
 
@@ -23,8 +23,12 @@ class TodoManager {
         return ApiClient.post(Endpoints.todos(), todo)
     }
 
-    fun getTodos(offset: Int? = 0, limit: Int? = 100): Response {
-        return ApiClient.get(Endpoints.todos())
+    fun getTodos(offset: Any? = 0, limit: Any? = 100): Response {
+        val params = mapOf(
+            "offset" to "$offset",
+            "limit" to "$limit"
+        )
+        return ApiClient.get(Endpoints.todos(), params)
     }
 
     fun deleteTodo(id: ULong): Response {

@@ -1,5 +1,6 @@
 package utils
 
+import dto.Entity
 import khttp.responses.Response
 import org.assertj.core.api.Assertions.assertThat
 
@@ -33,4 +34,11 @@ fun Response.assertListContains(vararg expected: Any) {
     assertThat(this.listOfEntity(expected[0]::class.java))
         .isNotNull
         .containsAll(listOf(*expected))
+}
+
+
+fun Response.assertListSize(size: Int) {
+    assertThat(this.listOfEntity(Entity::class.java))
+        .isNotNull
+        .hasSize(size)
 }

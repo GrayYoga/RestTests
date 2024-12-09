@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Todo @JsonCreator constructor(
-    var id: ULong?,
+    override var id: ULong?,
     var text: String?,
     var completed: Boolean?,
-)
+) : Entity(id)
