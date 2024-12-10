@@ -4,6 +4,8 @@ import api.ApiClient
 import api.Endpoints
 import dto.Todo
 import khttp.responses.Response
+import khttp.structures.authorization.Authorization
+import khttp.structures.authorization.BasicAuthorization
 import utils.TestData
 import utils.checkSuccess
 import utils.listOfEntity
@@ -31,8 +33,8 @@ class TodoManager {
         return ApiClient.get(Endpoints.todos(), params)
     }
 
-    fun deleteTodo(id: ULong): Response {
-        return ApiClient.delete(Endpoints.todos(id))
+    fun deleteTodo(id: ULong, auth: Authorization = BasicAuthorization("admin", "admin")): Response {
+        return ApiClient.delete(Endpoints.todos(id), auth = auth)
     }
 
     fun updateTodo(id: ULong, todo: Todo): Response {
