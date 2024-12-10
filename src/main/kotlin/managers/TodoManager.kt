@@ -10,13 +10,11 @@ import utils.listOfEntity
 
 class TodoManager {
     init {
-        TestData.initId(
-            getTodos()
-                .checkSuccess()
-                .listOfEntity(Todo::class.java)
-                .lastOrNull()
-                ?.id ?: 1u
-        )
+        getTodos(limit = 10000)
+            .checkSuccess()
+            .listOfEntity(Todo::class.java)
+            .lastOrNull()
+            ?.id?.let { TestData.initId(it) }
     }
 
     fun createTodo(todo: Todo): Response {

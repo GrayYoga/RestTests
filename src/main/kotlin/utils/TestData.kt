@@ -6,7 +6,7 @@ object TestData {
     private var seriesId: ULong = 0u
 
     fun initId(id: ULong) {
-        seriesId = id + 1u
+        if (id >= seriesId) { seriesId = id + 1u }
     }
 
     fun nextId(): ULong {
