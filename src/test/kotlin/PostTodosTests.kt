@@ -24,6 +24,19 @@ class PostTodosTests {
         }
     }
 
+    @Test
+    fun postDuplicateTodoTest() {
+        TestData.todo().also {
+            todos.addLast(it)
+            TodoManager().apply {
+                createTodo(it)
+                    .checkSuccess()
+                createTodo(it)
+                    .checkStatusCode(400)
+            }
+        }
+    }
+
     @TestFactory
     fun postTodoValidationTest(): List<DynamicTest> {
         return listOf(
@@ -56,6 +69,8 @@ class PostTodosTests {
                 }
             }
     }
+
+
 
     companion object {
         private var todos = mutableListOf<Todo>()
