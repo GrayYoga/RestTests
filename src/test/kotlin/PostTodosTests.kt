@@ -9,7 +9,7 @@ import utils.assertListContains
 import utils.checkStatusCode
 import utils.checkSuccess
 
-class PostTodosTests {
+class PostTodosTests : BaseTodoTests() {
 
     @Test
     fun postTodoTest() {
@@ -67,18 +67,6 @@ class PostTodosTests {
                     createTodo(it)
                         .checkStatusCode(413)
                 }
-        }
-    }
-
-    companion object {
-        private var todos = mutableListOf<Todo>()
-
-        @JvmStatic
-        @AfterAll
-        fun clearData() {
-            TodoManager().apply {
-                todos.map { it.id?.let { t -> deleteTodo(t) } }
-            }
         }
     }
 }

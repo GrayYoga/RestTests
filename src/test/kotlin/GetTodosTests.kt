@@ -1,4 +1,6 @@
+import dto.Todo
 import managers.TodoManager
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test
@@ -10,7 +12,7 @@ import utils.checkStatusCode
 import utils.checkSuccess
 
 
-class GetTodosTests {
+class GetTodosTests : BaseTodoTests() {
 
     @Test
     fun getTodosTest() {
@@ -57,7 +59,8 @@ class GetTodosTests {
     }
 
     companion object {
-        val todo = TestData.todo()
+        private var todos = mutableListOf<Todo>()
+        val todo = TestData.todo().also { todos.addLast(it) }
 
         @JvmStatic
         @BeforeAll
@@ -65,11 +68,10 @@ class GetTodosTests {
             TodoManager().apply {
                 createTodo(todo)
                 repeat(10) {
-                    createTodo(TestData.todo())
+                    createTodo(TestData.todo().also { todos.addLast(it) })
                         .checkSuccess()
                 }
             }
-
         }
     }
 }

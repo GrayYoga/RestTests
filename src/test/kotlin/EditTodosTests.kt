@@ -11,7 +11,7 @@ import utils.checkStatusCode
 import utils.checkSuccess
 import utils.listOfEntity
 
-class EditTodosTests {
+class EditTodosTests : BaseTodoTests() {
 
     @Test
     fun editTodoTest() {
@@ -84,18 +84,6 @@ class EditTodosTests {
                 getTodos().checkSuccess().listOfEntity(Todo::class.java)
                     .filter { it.id == todo2.id }.size
             ).isEqualTo(2)
-        }
-    }
-
-    companion object {
-        private var todos = mutableListOf<Todo>()
-
-        @JvmStatic
-        @AfterAll
-        fun clearData() {
-            TodoManager().apply {
-                todos.map { it.id?.let { t -> deleteTodo(t) } }
-            }
         }
     }
 }
