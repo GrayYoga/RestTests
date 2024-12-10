@@ -15,8 +15,7 @@ class TodoManager {
         getTodos(limit = 10000)
             .checkSuccess()
             .listOfEntity(Todo::class.java)
-            .map { it.id!! }
-            .maxOrNull()
+            .maxOfOrNull { it.id!! }
             ?.let { TestData.initId(it) }
     }
 
@@ -24,7 +23,7 @@ class TodoManager {
         return ApiClient.post(Endpoints.todos(), todo)
     }
 
-    fun getTodos(offset: Any? = 0, limit: Any? = 100): Response {
+    fun getTodos(offset: Any? = 0, limit: Any? = 1000): Response {
         val params = mapOf(
             "offset" to "$offset",
             "limit" to "$limit"
