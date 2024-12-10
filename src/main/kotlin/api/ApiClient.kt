@@ -1,13 +1,10 @@
 package api
 
-import java.lang.System.Logger.Level.INFO
-import java.lang.System.getLogger
 import khttp.responses.Response
 import khttp.structures.authorization.Authorization
 import khttp.structures.authorization.BasicAuthorization
-import org.json.JSONArray
-import org.json.JSONObject
 import utils.JacksonMapper
+import utils.ResponseLogger.logResponse
 
 
 object ApiClient {
@@ -43,31 +40,5 @@ object ApiClient {
             headers = mapOf("Content-Type" to "application/json"),
             data = JacksonMapper.writeValueAsString(body),
         ).apply { logResponse("put", this) }
-    }
-
-    private fun logResponse(name: String, response: Response) {
-        getLogger(name).log(
-            INFO,
-            "${response.request.method} ${response.request.url}\n${
-                jsonFormat(response.request.data?.toString())
-            }"
-        )
-        getLogger(name).log(
-            INFO, "${response.statusCode}\n${
-                jsonFormat(response.text)
-            }"
-        )
-    }
-
-    private fun jsonFormat(data: String?): String {
-        return data?.let {
-            if (it.startsWith("{") && it.endsWith("}")) {
-                JSONObject(it).toString(2)
-            } else if (it.startsWith("[{") && it.endsWith("}]")) {
-                JSONArray(it).toString(2)
-            } else {
-                it
-            }
-        } ?: ""
     }
 }
