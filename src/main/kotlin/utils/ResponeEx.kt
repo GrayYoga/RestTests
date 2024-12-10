@@ -36,6 +36,11 @@ fun Response.assertListContains(vararg expected: Any) {
         .containsAll(listOf(*expected))
 }
 
+fun Response.assertListDoesNotContains(vararg expected: Any) {
+    assertThat(this.listOfEntity(expected[0]::class.java))
+        .isNotNull
+        .doesNotContain(listOf(*expected))
+}
 
 fun Response.assertListSize(size: Int) {
     assertThat(this.listOfEntity(Entity::class.java))

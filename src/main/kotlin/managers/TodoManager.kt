@@ -13,8 +13,10 @@ class TodoManager {
         getTodos(limit = 10000)
             .checkSuccess()
             .listOfEntity(Todo::class.java)
-            .lastOrNull()
-            ?.id?.let { TestData.initId(it) }
+            .map { it.id!! }
+            .toList()
+            .maxOrNull()
+            ?.let { TestData.initId(it) }
     }
 
     fun createTodo(todo: Todo): Response {
