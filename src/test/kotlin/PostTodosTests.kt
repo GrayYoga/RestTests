@@ -48,7 +48,7 @@ class PostTodosTests {
     @Test
     fun postTodoWithLongDescriptionTest() {
         TestData.todo()
-            .apply { text = "Longest de".repeat(1634) }
+            .apply { text = "Longest de".repeat(1635) }
             .also {
                 TodoManager().apply {
                     createTodo(it)
