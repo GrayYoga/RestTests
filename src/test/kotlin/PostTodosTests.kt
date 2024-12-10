@@ -13,9 +13,9 @@ class PostTodosTests {
 
     @Test
     fun postTodoTest() {
-        TestData.todo().also {
-            todos.addLast(it)
-            TodoManager().apply {
+        TodoManager().apply {
+            TestData.todo().also {
+                todos.addLast(it)
                 createTodo(it)
                     .checkSuccess()
                 getTodos()
@@ -26,9 +26,9 @@ class PostTodosTests {
 
     @Test
     fun postDuplicateTodoTest() {
-        TestData.todo().also {
-            todos.addLast(it)
-            TodoManager().apply {
+        TodoManager().apply {
+            TestData.todo().also {
+                todos.addLast(it)
                 createTodo(it)
                     .checkSuccess()
                 createTodo(it)
@@ -60,17 +60,15 @@ class PostTodosTests {
 
     @Test
     fun postTodoWithLongDescriptionTest() {
-        TestData.todo()
-            .apply { text = "Longest de".repeat(1635) }
-            .also {
-                TodoManager().apply {
+        TodoManager().apply {
+            TestData.todo()
+                .apply { text = "Longest de".repeat(1635) }
+                .also {
                     createTodo(it)
                         .checkStatusCode(413)
                 }
-            }
+        }
     }
-
-
 
     companion object {
         private var todos = mutableListOf<Todo>()
