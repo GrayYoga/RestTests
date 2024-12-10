@@ -16,7 +16,6 @@ class TodoManager {
             .checkSuccess()
             .listOfEntity(Todo::class.java)
             .map { it.id!! }
-            .toList()
             .maxOrNull()
             ?.let { TestData.initId(it) }
     }
