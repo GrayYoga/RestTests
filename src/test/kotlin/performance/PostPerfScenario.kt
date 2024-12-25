@@ -11,11 +11,11 @@ import utils.listOfEntity
 
 object PostPerfScenario {
     private val mapper = jacksonObjectMapper()
-    private var initialId = TodoManager().getTodos(limit = 10000)
+    private var initialId = TodoManager().getTodos()
         .checkSuccess()
         .listOfEntity(Todo::class.java)
         .maxOfOrNull { it.id!! }
-        ?: 1u
+        ?: 0u
 
     private fun feeder(): Iterator<Map<String, String>> = iterator {
         while (true) {
@@ -23,7 +23,7 @@ object PostPerfScenario {
                 mapOf(
                     "todo" to mapper.writeValueAsString(
                         Todo(
-                            id = initialId++,
+                            id = ++initialId,
                             text = "Todo $initialId",
                             completed = (initialId % 2u).toInt() == 0
                         )

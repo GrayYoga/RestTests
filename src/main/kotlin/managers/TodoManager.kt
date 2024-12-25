@@ -12,7 +12,7 @@ import utils.listOfEntity
 
 class TodoManager {
     init {
-        getTodos(limit = 10000)
+        getTodos()
             .checkSuccess()
             .listOfEntity(Todo::class.java)
             .maxOfOrNull { it.id!! }
@@ -23,7 +23,7 @@ class TodoManager {
         return ApiClient.post(Endpoints.todos(), todo)
     }
 
-    fun getTodos(offset: Any? = 0, limit: Any? = 1000): Response {
+    fun getTodos(offset: Any? = 0, limit: Any? = 1000000000): Response {
         val params = mapOf(
             "offset" to "$offset",
             "limit" to "$limit"
